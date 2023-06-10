@@ -72,3 +72,6 @@ def index_for_bypass_bot():
 def home():
     response_data = {"server": "running"}
     return jsonify(response_data)
+
+if __name__ == "__main__":
+    app.run()
