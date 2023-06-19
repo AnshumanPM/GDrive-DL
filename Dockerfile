@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD flask run -h 0.0.0.0 -p 10000
+CMD gunicorn --bind 0.0.0.0:5000 app:app
