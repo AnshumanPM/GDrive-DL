@@ -3,7 +3,7 @@ import urllib.parse
 
 import extraction
 import requests
-from flask import Flask, Response, jsonify, request
+from flask import Flask, Response, jsonify, render_template, request
 
 app = Flask(__name__)
 
@@ -33,10 +33,19 @@ def get_confirm_token(response):
     return None
 
 
+@app.route("/download")
 @app.route("/dl")
 def download_file_from_google_drive():
     id = request.args.get("id")
+    stream = str(request.args.get("stream", "False")).lower()
     if id != "":
+        if stream == "true":
+            file_url = request.url[:-12]
+            file_name = gen_gdrive_file_name(id)
+            return render_template(
+                "index.html", file_name=file_name, video_url=file_url
+            )
+
         URL = "https://docs.google.com/uc?export=download"
         session = requests.Session()
         response = session.get(URL, params={"id": id, "confirm": 1}, stream=True)
@@ -63,6 +72,7 @@ def download_file_from_google_drive():
 @app.route("/")
 def home():
     return jsonify({"server": "running"})
+
 
 if __name__ == "__main__":
     app.run()
