@@ -3,7 +3,7 @@ import urllib.parse
 
 import extraction
 import requests
-from flask import Flask, Response, jsonify, redirect, request
+from flask import Flask, Response, jsonify, request
 
 app = Flask(__name__)
 
@@ -60,18 +60,9 @@ def download_file_from_google_drive():
         return "File ID is required.", 400
 
 
-@app.route("/download")
-def index_for_bypass_bot():
-    gd_id = request.args.get("id")
-    if gd_id != "":
-        return redirect(f"https://gdown.arnid.workers.dev/download?id={gd_id}")
-    return "Invalid Link"
-
-
 @app.route("/")
 def home():
-    response_data = {"server": "running"}
-    return jsonify(response_data)
+    return jsonify({"server": "running"})
 
 if __name__ == "__main__":
     app.run()
