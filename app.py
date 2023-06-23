@@ -42,6 +42,8 @@ def download_file_from_google_drive():
         if stream == "true":
             file_url = request.url[:-12]
             file_name = gen_gdrive_file_name(id)
+            if file_name == "Error 404 (Not Found)!!1":
+                return "File ID is Expired or Incorrect File ID.", 400
             return render_template(
                 "video.html", file_name=file_name, video_url=file_url
             )
