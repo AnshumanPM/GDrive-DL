@@ -59,10 +59,11 @@ def download_file_from_google_drive():
                 if chunk:
                     yield chunk
 
+        file_size = int(response.headers.get("Content-Length", 0))
         file_name = gen_gdrive_file_name(id)
         headers = {"Content-Disposition": f'attachment; filename="{file_name}"'}
         return Response(
-            generate(), headers=headers, content_type=response.headers["content-type"]
+            generate(), headers=headers, content_type=response.headers["content-type"], content_length=file_size
         )
 
     else:
