@@ -43,7 +43,7 @@ def download_file_from_google_drive():
             file_url = request.url[:-12]
             file_name = gen_gdrive_file_name(id)
             return render_template(
-                "index.html", file_name=file_name, video_url=file_url
+                "video.html", file_name=file_name, video_url=file_url
             )
 
         URL = "https://docs.google.com/uc?export=download"
